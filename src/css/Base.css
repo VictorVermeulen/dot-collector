@@ -1,0 +1,69 @@
+body {
+  background-color: #efe8d8;
+  font-family: 'Merriweather', sans-serif;
+}
+
+h1, h2, h3,
+h1 a, h2 a, h3 a {
+  font-weight: 900;
+  color: red;
+}
+
+body {
+  font-weight: 300;
+  color: #404040;
+}
+
+ul.dot-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+.dot-list li {
+  float: left;
+  margin: 10px 10px 0 0;
+  padding: 3px;
+  border-radius: 50%;
+	width: 10px;
+	height: 10px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.dot-list li span {
+  font-weight: 900;
+  display: none;
+}
+
+ul.dot-list-key {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.dot-list-key li {
+  background-color: transparent;
+}
+
+.Conflicted {
+  background-color: #ee5253;
+  color: #ee5253;
+}
+.Easy {
+  background-color: #feca57;
+  color: #feca57;
+}
+.Sad {
+  background-color: #2e86de;
+  color: #2e86de;
+}
+.Happy {
+  background-color: #feca57;
+  color: #feca57;
+}
+.Fulfilled {
+  background-color: #1dd1a1;
+  color: #1dd1a1;
+}
+.Bored {
+  background-color: #222f3e;
+  color: #222f3e;
+}
