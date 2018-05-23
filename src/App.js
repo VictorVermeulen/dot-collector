@@ -4,13 +4,15 @@ import Base from './css/Base.css';
 import Grid from './css/Grid.css';
 import Forms from './css/Forms.css';
 import Dot from './Dot';
+import DotList from './DotList';
+import dotTypes from './dot-types';
 
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      dotType: 'Conflicted',
+      dotType: '',
       dots: []
     }
     this.handleChange = this.handleChange.bind(this);
@@ -25,7 +27,7 @@ class App extends Component {
       for (let dot in dots) {
         newState.push({
           id: dot,
-          title: dots[dot].dotType
+          type: dots[dot].dotType
         });
       }
       this.setState({
@@ -41,14 +43,17 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const dotsRef = firebase.database().ref('dots');
-    const dot = {
-      dotType: this.state.dotType
+    if (this.state.dotType !== '') {
+      const dotsRef = firebase.database().ref('dots');
+      const dot = {
+        dotType: this.state.dotType,
+        timestamp: new Date(),
+      }
+      dotsRef.push(dot);
+      this.setState({
+        dotType: ''
+      });
     }
-    dotsRef.push(dot);
-    this.setState({
-      dotType: ''
-    });
   }
 
   handleChange(e) {
@@ -72,12 +77,8 @@ class App extends Component {
                   <label for="dotType">
                     How are you feeling?:
                     <select name="dotType" onChange={this.handleChange} value={this.state.dotType}>
-                      <option value="Conflicted">Conflicted</option>
-                      <option value="Easy">Easy</option>
-                      <option value="Sad">Sad</option>
-                      <option value="Happy">Happy</option>
-                      <option value="Fulfilled">Fulfilled</option>
-                      <option value="Bored">Bored</option>
+                      <option value="">SELECT A TYPE</option>
+                      {dotTypes.map(({ label }) => <option value={label}>{label.toUpperCase()}</option>)}
                     </select>
                   </label>
                   <button>Add dot</button>
@@ -85,25 +86,14 @@ class App extends Component {
             </section>
             <section className='display-dot'>
               <div className="wrapper">
-                <ul className="dot-list">
-                  {this.state.dots.map(({ id, title }) => {
+                <DotList>
+                  {this.state.dots.map(({ id, type }) => {
                     return (
-                      <Dot title={title} id={id} removeDot={this.removeDot} />
+                      <Dot type={type} id={id} removeDot={this.removeDot} />
                     )
                   })}
-                </ul>
+                </DotList>
               </div>
-            </section>
-            <section className="col-12">
-              <h3>Key</h3>
-              <ul className="dot-list-key">
-                <li className="Conflicted">Conflicted</li>
-                <li className="Easy">Easy</li>
-                <li className="Sad">Sad</li>
-                <li className="Happy">Happy</li>
-                <li className="Fulfilled">Fulfilled</li>
-                <li className="Bored">Bored</li>
-              </ul>
             </section>
           </div>
         </div>
